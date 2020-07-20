@@ -1,0 +1,5 @@
+gcloud compute firewall-rules create allow-health-check \
+    --network default \
+    --source-ranges 130.211.0.0/22,35.191.0.0/16 \
+    --target-tags int-lb \
+    --allow tcp

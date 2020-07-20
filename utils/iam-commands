@@ -1,0 +1,7 @@
+gcloud projects add-iam-policy-binding serttel-222017 \
+    --member=group:remotemanagementaccess@serttel.com.br \
+    --role=roles/iap.tunnelResourceAccessor
+
+
+
+

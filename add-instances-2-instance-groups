@@ -1,0 +1,2 @@
+gcloud compute instance-groups unmanaged add-instances ig1 \
+    --instances=webserver2,webserver3 --zone $MY_ZONE1

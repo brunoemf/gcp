@@ -1,0 +1,3 @@
+gcloud beta container clusters create echo-cluster  --machine-type=n1-standard-2 --cluster-version=latest --zone=us-central1-a --node-locations us-central1-a --num-nodes=2 --enable-autoscaling --max-nodes=2 --min-nodes=1
+  
+gcloud container clusters get-credentials lab-mobc

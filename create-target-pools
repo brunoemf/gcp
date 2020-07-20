@@ -1,0 +1,2 @@
+gcloud compute target-pools create extloadbalancer \
+    --region $MY_REGION --http-health-check webserver-health

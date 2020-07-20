@@ -1,0 +1,21 @@
+gcloud compute \
+forwarding-rules create vpn-1-esp \
+--region us-central1  \
+--ip-protocol ESP  \
+--address $STATIC_IP_VPN_1 \
+--target-vpn-gateway vpn-1
+
+gcloud compute \
+forwarding-rules create vpn-1-udp500  \
+--region us-central1 \
+--ip-protocol UDP \
+--ports 500 \
+--address $STATIC_IP_VPN_1 \
+--target-vpn-gateway vpn-1
+
+gcloud compute \
+forwarding-rules create vpn-1-udp4500  \
+--region us-central1 \
+--ip-protocol UDP --ports 4500 \
+--address $STATIC_IP_VPN_1 \
+--target-vpn-gateway vpn-1

@@ -1,0 +1,106 @@
+HOW TO CREATE A VPN SITE-TO-SITE BETWEEN DIFFERENT VPC NETOWORKS
+
+##################################################################
+1- CREATE VPN GATEWAYS
+##################################################################
+
+gcloud compute target-vpn-gateways \
+create vpn-1 \
+--network vpn-network-1  \
+--region us-central1
+
+gcloud compute target-vpn-gateways \
+create vpn-2 \
+--network vpn-network-2  \
+--region europe-west1
+
+####################################################################################################################################
+2- CREATE AND RESERVE EXTERNAL IPS FOR THE VPN GATEWAYS ON EACH NETWORK
+####################################################################################################################################
+
+gcloud compute addresses create --region us-central1 vpn-1-static-ip
+
+gcloud compute addresses create --region europe-west1 vpn-2-static-ip
+
+##################################################################
+3- CREATE FORWARDIND RULES
+##################################################################
+
+1- RULE FOR ESP PROTOCOL
+
+gcloud compute \
+forwarding-rules create vpn-1-esp \
+--region us-central1  \
+--ip-protocol ESP  \
+--address $STATIC_IP_VPN_1 \
+--target-vpn-gateway vpn-1
+
+gcloud compute \
+forwarding-rules create vpn-2-esp \
+--region europe-west1  \
+--ip-protocol ESP  \
+--address $STATIC_IP_VPN_2 \
+--target-vpn-gateway vpn-2
+
+2- RULE FOR UDP/500 
+
+gcloud compute \
+forwarding-rules create vpn-1-udp500  \
+--region us-central1 \
+--ip-protocol UDP \
+--ports 500 \
+--address $STATIC_IP_VPN_1 \
+--target-vpn-gateway vpn-1
+
+gcloud compute \
+forwarding-rules create vpn-2-udp500  \
+--region europe-west1 \
+--ip-protocol UDP \
+--ports 500 \
+--address $STATIC_IP_VPN_2 \
+--target-vpn-gateway vpn-2
+
+3- RULE FOR UDP/4500
+
+##################################################################
+4- CREATE THE TUNNELS
+##################################################################
+
+gcloud compute \
+vpn-tunnels create tunnel1to2  \
+--peer-address $STATIC_IP_VPN_2 \
+--region us-central1 \
+--ike-version 2 \
+--shared-secret gcprocks \
+--target-vpn-gateway vpn-1 \
+--local-traffic-selector 0.0.0.0/0 \
+--remote-traffic-selector 0.0.0.0/0
+
+gcloud compute \
+vpn-tunnels create tunnel2to1 \
+--peer-address $STATIC_IP_VPN_1 \
+--region europe-west1 \
+--ike-version 2 \
+--shared-secret gcprocks \
+--target-vpn-gateway vpn-2 \
+--local-traffic-selector 0.0.0.0/0 \
+--remote-traffic-selector 0.0.0.0/0
+
+
+##################################################################
+4- CREATE A STATIC ROUTES
+##################################################################
+
+gcloud compute  \
+routes create route1to2  \
+--network vpn-network-1 \
+--next-hop-vpn-tunnel tunnel1to2 \
+--next-hop-vpn-tunnel-region us-central1 \
+--destination-range 10.1.3.0/24
+
+gcloud compute  \
+routes create route2to1  \
+--network vpn-network-2 \
+--next-hop-vpn-tunnel tunnel2to1 \
+--next-hop-vpn-tunnel-region europe-west1 \
+--destination-range 10.5.4.0/24

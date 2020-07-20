@@ -1,0 +1,49 @@
+#########################################################################
+#########################################################################
+################ SOME K8S (GKE) UTILS COMMANDS ##########################
+
+# CONFIGURE TAB COMPLETION FOR THE KUBECTL COMMAND-LINE TOOL
+source <(kubectl completion bash)
+
+# GET CLUSTES CREDENTIALS
+gcloud container clusters get-credentials $my_cluster --zone $my_zone
+
+# GCP TRAINING REPO
+git clone https://github.com/GoogleCloudPlatform/training-data-analyst
+ln -s ~/training-data-analyst/courses/ak8s/v1.1 ~/ak8s
+
+###########################################################################
+############################## NAMESPACES #################################
+
+kubectl get namespaces
+kubectl describe namespaces [NAMESPACE NAME]
+
+- CREATE RESOURCE INTO SPECIFIC NAMESPACE
+kubectl apply -f ./my-pod.yaml --namespace=[NAMESPACE NAME]
+
+###########################################################################
+############################## PODS #######################################
+
+kubectl get pods
+kubectl get pods --namespace=[NAMESPACE NAME]
+
+###########################################################################
+######################## ROLE-BASED ACCESS CONTROLLER #####################
+
+- GRANT USER ACCOUNT CLUSTER-ADMIN PRIVILEGES
+kubectl create clusterrolebinding cluster-admin-binding --clusterrole cluster-admin --user [USERNAME]
+
+###########################################################################
+#######################  ENV VARIABLES ####################################             
+
+- SET PROJECT ID INTO VARIABLE FROM GCLOUD CONFIG COMMAND 
+export PROJECT_ID="$(gcloud config get-value project -q)"
+
+###########################################################################
+#######################  INJECTING VALUES INTO CONFIG FILES ###############
+
+EXAMPLES
+sed -i "s/\[DOCKER-IMAGE\]/gcr\.io\/${PROJECT_ID}\/gcp-gke-monitor-test\:latest/" gcp-gke-monitor-test.yaml
+
+
+

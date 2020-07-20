@@ -1,0 +1,9 @@
+
+gcloud compute disks snapshot totvs-db --zone=us-east1-b --storage-location us-east1
+
+gcloud compute disks snapshot totvs-db-backup-disk --zone=us-east1-b --storage-location us-east1
+
+gcloud beta scheduler jobs run shutdown-dev-instances
+
+    
+US-EAST1

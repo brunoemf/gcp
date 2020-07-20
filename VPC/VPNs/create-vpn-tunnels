@@ -1,0 +1,9 @@
+gcloud compute \
+vpn-tunnels create tunnel1to2  \
+--peer-address $STATIC_IP_VPN_2 \
+--region us-central1 \
+--ike-version 2 \
+--shared-secret gcprocks \
+--target-vpn-gateway vpn-1 \
+--local-traffic-selector 0.0.0.0/0 \
+--remote-traffic-selector 0.0.0.0/0

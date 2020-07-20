@@ -1,0 +1,25 @@
+
+##################################################################
+CREATE FIREWALL rules
+##################################################################
+
+gcloud compute firewall-rules create allow-rdp-ingress-from-iap \
+  --direction=INGRESS \
+  --network=serttel-new-vpc \
+  --action=allow \
+  --rules=tcp:3389 \
+  --source-ranges=35.235.240.0/20
+
+gcloud compute firewall-rules create allow-ssh-ingress-from-iap \
+  --direction=INGRESS \
+  --network=serttel-new-vpc \
+  --action=allow \
+  --rules=tcp:22 \
+  --source-ranges=35.235.240.0/20
+
+
+IAP Tunniling rdp
+
+gcloud compute start-iap-tunnel srv-mobc-privado 3389 \
+    --local-host-port=localhost \
+    --zone=us-east1-b 

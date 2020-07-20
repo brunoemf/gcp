@@ -1,0 +1,76 @@
+gcloud beta scheduler jobs create pubsub startup-totvs-db-instances \
+    --schedule '0 6 * * 0-6' \
+    --topic start-instance-event \
+    --message-body '{"zone":"us-east1-b", "label":"env=totvs-db"}' \
+    --time-zone 'America/Recife'
+
+gcloud beta scheduler jobs create pubsub startup-totvs-app-instances \
+    --schedule '5 6 * * 0-6' \
+    --topic start-instance-event \
+    --message-body '{"zone":"us-east1-b", "label":"env=totvs-app"}' \
+    --time-zone 'America/Recife'
+
+
+gcloud beta scheduler jobs create pubsub startup-totvs-tss-instances \
+    --schedule '10 6 * * 0-6' \
+    --topic start-instance-event \
+    --message-body '{"zone":"us-east1-b", "label":"env=totvs-tss"}' \
+    --time-zone 'America/Recife'
+
+gcloud beta scheduler jobs create pubsub shutdown-totvs-db-instances \
+    --schedule '10 20 * * 0-6' \
+    --topic stop-instance-event \
+    --message-body '{"zone":"us-east1-b", "label":"env=totvs-db"}' \
+    --time-zone 'America/Recife'
+
+gcloud beta scheduler jobs create pubsub shutdown-totvs-app-instances \
+    --schedule '10 20 * * 0-6' \
+    --topic stop-instance-event \
+    --message-body '{"zone":"us-east1-b", "label":"env=totvs-app"}' \
+    --time-zone 'America/Recife'
+
+gcloud beta scheduler jobs create pubsub shutdown-totvs-tss-instances \
+    --schedule '10 20 * * 0-6' \
+    --topic stop-instance-event \
+    --message-body '{"zone":"us-east1-b", "label":"env=totvs-tss"}' \
+    --time-zone 'America/Recife'
+
+   
+gcloud beta scheduler jobs create pubsub startup-web-instances \
+    --schedule '0 6 * * 0-6' \
+    --topic start-instance-event \
+    --message-body '{"zone":"us-east1-b", "label":"env=web"}' \
+    --time-zone 'America/Recife'
+
+
+gcloud beta scheduler jobs create pubsub shutdown-web-instances \
+    --schedule '0 0 * * 0-6' \
+    --topic stop-instance-event \
+    --message-body '{"zone":"us-east1-b", "label":"env=web"}' \
+    --time-zone 'America/Recife'
+
+gcloud beta scheduler jobs create pubsub shutdown-samba-web-instances \
+    --schedule '0 0 * * 0-6' \
+    --topic stop-instance-event \
+    --message-body '{"zone":"us-east1-b", "label":"env=web-samba"}' \
+    --time-zone 'America/Recife'
+
+gcloud beta scheduler jobs create pubsub startup-samba-web-instances \
+    --schedule '0 5 * * 0-6' \
+    --topic start-instance-event \
+    --message-body '{"zone":"us-east1-b", "label":"env=web-samba"}' \
+    --time-zone 'America/Recife'
+
+gcloud beta scheduler jobs create pubsub shutdown-ad-dr-instances \
+    --schedule '0 0 * * 2' \
+    --topic stop-instance-event \
+    --message-body '{"zone":"us-east1-b", "label":"env=ad2"}' \
+    --time-zone 'America/Recife'
+
+gcloud beta scheduler jobs create pubsub startup-ad-dr-instances \
+    --schedule '0 5 * * 0' \
+    --topic start-instance-event \
+    --message-body '{"zone":"us-east1-b", "label":"env=ad2"}' \
+    --time-zone 'America/Recife'
+
+   

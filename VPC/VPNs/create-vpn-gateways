@@ -1,0 +1,4 @@
+gcloud compute target-vpn-gateways \
+create vpn-1 \
+--network vpn-network-1  \
+--region us-central1

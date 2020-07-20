@@ -1,0 +1,3 @@
+gcloud compute forwarding-rules create webserver-rule \
+    --region $MY_REGION --ports 80 \
+    --address $STATIC_EXTERNAL_IP --target-pool extloadbalancer

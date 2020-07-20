@@ -1,0 +1,10 @@
+gcloud compute backend-services create my-int-lb \
+    --load-balancing-scheme internal \
+    --region $MY_REGION \
+    --health-checks my-tcp-health-check \
+    --protocol tcp
+
+gcloud compute backend-services add-backend my-int-lb \
+    --instance-group ig1 \
+    --instance-group-zone $MY_ZONE1 \
+    --region $MY_REGION
